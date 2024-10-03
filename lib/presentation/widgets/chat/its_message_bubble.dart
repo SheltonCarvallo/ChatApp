@@ -1,7 +1,14 @@
+//import 'package:chat_app/domain/entities/message.dart';
+//import 'package:chat_app/domain/entities/message.dart';
+import 'package:chat_app/domain/entities/message.dart';
 import 'package:flutter/material.dart';
 
 class ItsMessageBubble extends StatelessWidget {
-  const ItsMessageBubble({super.key});
+  final Message itsMessage;
+  const ItsMessageBubble({
+    super.key,
+    required this.itsMessage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +20,16 @@ class ItsMessageBubble extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
               color: colors.secondary, borderRadius: BorderRadius.circular(20)),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Text(
-              'x y z',
-              style: TextStyle(fontSize: 15, color: Colors.black),
+              itsMessage.text,
+              style: const TextStyle(fontSize: 15, color: Colors.black),
             ),
           ),
         ),
         const SizedBox(height: 10),
-        _ImageBubble(),
+        _ImageBubble(itsMessage.imageUrl!),
         const SizedBox(height: 10)
       ],
     );
@@ -30,14 +37,19 @@ class ItsMessageBubble extends StatelessWidget {
 }
 
 class _ImageBubble extends StatelessWidget {
+  final String imageUrl;
+
+  const _ImageBubble(this.imageUrl);
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final size =
+        MediaQuery.of(context).size; // to get the dimensions of the divice
 
     return ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.network(
-          'https://yesno.wtf/assets/no/0-b6d3e555af2c09094def76cf2fbddf46.gif',
+          imageUrl,
           width: size.width * 0.5,
           height: 150,
           fit: BoxFit.cover,
